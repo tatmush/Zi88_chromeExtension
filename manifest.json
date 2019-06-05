@@ -1,0 +1,25 @@
+{
+	"name": "Zi88",
+	"version": "1.0.0",
+	"manifest_version": 2,
+
+	"description": "We love music!",
+
+	"browser_action": {
+		"default_title": "Zi88",
+		"default_popup": "Zi88.html"
+	},
+
+	"permissions": [
+		"tabs", "*://*.youtube.com/*", "activeTab"
+	],
+
+	"content_scripts": [
+		{
+			"matches": ["*://*.youtube.com/*"],
+			"js": ["jquery-3.4.0.min.js", "youtubeData.js"]
+		}
+
+	],
+	"content_security_policy": "script-src 'self' https://code.jquery.com/jquery-3.4.1.min.js https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js; object-src 'self'"
+}
