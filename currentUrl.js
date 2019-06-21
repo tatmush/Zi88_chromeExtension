@@ -28,75 +28,76 @@ function getVideoInfo(videoId, value){
 		id: videoId
 	}
 		
-
 	$.getJSON("https://www.googleapis.com/youtube/v3/videos", options, data => {
-		
-		//list tag 
-		let li = document.createElement("li");
-		li.className = "d-flex flex-row";
-		li.id = videoId;
-		//image
-		let thumbnail = new Image(64, 56);
-		thumbnail.src = data.items[0].snippet.thumbnails.medium.url;
-
+			
 		//console.log(data);
 
-		//setting up URL link to video
-		let videoUrl = document.createElement("a");
-		videoUrl.href = "https://www.youtube.com/watch?v=" + videoId;
-		videoUrl.target = "_blank";
-		videoUrl.textContent = data.items[0].snippet.title;
-					
-		let timesWatched = document.createElement("span");
+		videoCategory = data.items[0].snippet.categoryId;
+		//Music video categoryId is "10" for youtube
+		if (videoCategory === "10"){
+			//make an li tag for each video
+			let li = document.createElement("li");
+			li.className = "d-flex flex-row";
+			li.id = videoId;
+			//image
+			let thumbnail = new Image(64, 56);
+			thumbnail.src = data.items[0].snippet.thumbnails.medium.url;
 
-		let deleteRecord = document.createElement("span");
-		deleteRecord.id = "deleteRecord";
-		deleteRecord.textContent = "X";
-		deleteRecord.style.position = "absolute";
-		deleteRecord.style.bottom = "0";
-		deleteRecord.style.right = "0";
+			//setting up URL link to video
+			let videoUrl = document.createElement("a");
+			videoUrl.href = "https://www.youtube.com/watch?v=" + videoId;
+			videoUrl.target = "_blank";
+			videoUrl.textContent = data.items[0].snippet.title;
+				
+			let timesWatched = document.createElement("span");
+
+			let deleteRecord = document.createElement("span");
+			deleteRecord.id = "deleteRecord";
+			deleteRecord.textContent = "X";
+			deleteRecord.style.position = "absolute";
+			deleteRecord.style.bottom = "0";
+			deleteRecord.style.right = "0";
 		
-		deleteRecord.onclick = event => {
-			let span = event.target;
-			let div = span.parentNode;
-			let li = div.parentNode;
+			deleteRecord.onclick = event => {
+				let span = event.target;
+				let div = span.parentNode;
+				let li = div.parentNode;
 
-			chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
-			chrome.tabs.sendMessage(tabs[0].id, li.id, getStats)
-			});
+				chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
+				chrome.tabs.sendMessage(tabs[0].id, li.id, getStats)
+				});
 
-			li.remove();
-		}
+				li.remove();
+			}
 
-		let border = document.createElement("hr");
+			let border = document.createElement("hr");
 
-		timesWatched.textContent = value;
+			timesWatched.textContent = value;
 
-		let divImage = document.createElement("div");
-		divImage.style.float = "left";
-		divImage.appendChild(thumbnail);
-		divImage.className = "p-2";
+			let divImage = document.createElement("div");
+			divImage.style.float = "left";
+			divImage.appendChild(thumbnail);
+			divImage.className = "p-2";
 
-		let divLink = document.createElement("div");
-		divLink.appendChild(videoUrl);
-		divLink.className = "p-2";
+			let divLink = document.createElement("div");
+			divLink.appendChild(videoUrl);
+			divLink.className = "p-2";
 
-		let divCount = document.createElement("div");
-		divCount.style.height = "64px";
-		divCount.style.float = "right";
-		divCount.className = "p-2";
-		divCount.style.position = "relative";
-		divCount.appendChild(timesWatched);
-		divCount.appendChild(deleteRecord);
+			let divCount = document.createElement("div");
+			divCount.style.height = "64px";
+			divCount.style.float = "right";
+			divCount.className = "p-2";
+			divCount.style.position = "relative";
+			divCount.appendChild(timesWatched);
+			divCount.appendChild(deleteRecord);
 		
+			li.appendChild(divImage);
+			li.appendChild(divLink);
+			li.appendChild(divCount)
 
-		li.appendChild(divImage);
-		li.appendChild(divLink);
-		li.appendChild(divCount)
-
-		musicList.appendChild(li);
-		musicList.appendChild(border);
-
+			musicList.appendChild(li);
+			musicList.appendChild(border);
+		}	
 	});
 
 }
