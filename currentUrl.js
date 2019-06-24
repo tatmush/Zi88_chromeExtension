@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	//tweet button
 	document.getElementById("tweet").addEventListener("click", tweet);
+
 	}, false);
 
 function getStats(stats){
@@ -130,20 +131,16 @@ function tweet(){
 	    	link = titleDiv.getElementsByTagName("a")[0];
 		videoTitle = link.innerHTML;
 		videoLink = link.href
-		
+		//get the number of times played		
 		countDiv = divs[2];
 		span = countDiv.getElementsByTagName("span")[0];
 		count = span.innerText
 
 		text = text + videoTitle + "\t" + "-" + "\t" + count + "\n";
-		//text.concat(videoTitle, "_____", count, "\n\n");
-		//text = text + "mush";
-		
-    		console.log(videoTitle + " " + count);
+    		//console.log(videoTitle + " " + count);
 })
-	console.log(text);	
+	//console.log(text);	
 	tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "via @Zi88";
-	//console.log(postData);
 	window.open(tweetUrl);
 }
 

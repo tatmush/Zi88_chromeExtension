@@ -23,13 +23,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 $(document).ready( () => {
 	let url = window.location.href;
-	console.log("init");
-	//if (url.includes("https://www.youtube.com/watch") && videoType()) {
 	if (url.includes("https://www.youtube.com/watch")) {
-			
-			console.log("init");
-	
-			//videoType();
 			//Looping videos
 			
 			videoElement = document.getElementsByClassName("video-stream html5-main-video")[0];
@@ -68,7 +62,6 @@ $(document).ready( () => {
 		if (e.target.id === 'progress'){
 			console.log("[+] Change in URL detected");
 			let url = window.location.href;
-		    //if(url.includes("watch") && videoType()){
 			if(url.includes("watch")){
 		    	console.log("[+] URL contains watch phrase and is a music video");
 				if(localStorage.getItem(url) != null){
@@ -83,7 +76,7 @@ $(document).ready( () => {
 					localStorage.setItem(url, 1);
 				}
 			}
-			console.log(localStorage.length);
+			//console.log(localStorage.length);
 		} 
 	    
 	});
@@ -99,15 +92,3 @@ function addTimesWatched(url){
 	localStorage.setItem(url, timesWatched);
 	console.log("[+] This video has been played " + timesWatched + " times.");
 }
-/*
-function videoType(){
-	
-	collapsibleDiv = document.getElementById("collapsible");
-	collapsibleDiv.style.visibility = "visible";
-	categoryLink = collapsibleDiv.getElementsByClassName("yt-simple-endpoint style-scope yt-formatted-string")[0];
-	category = categoryLink.innerText;
-	console.log("breaking here toooooooooooo");
-	//return category === "Music" ? true : false;
-	category === "Music" ? console.log("music video") : console.log("not a music video");
-}
-*/
