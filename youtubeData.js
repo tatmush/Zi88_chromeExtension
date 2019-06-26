@@ -21,7 +21,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 });
 
-$(document).ready( () => {
+$(document).ready(() => {
+//document.addEventListener("DOMContentLoaded", function (e) {
+	console.log("loaded");
 	let url = window.location.href;
 	if (url.includes("https://www.youtube.com/watch")) {
 			//Looping videos
@@ -55,7 +57,6 @@ $(document).ready( () => {
 				addTimesWatched(url);
 			}
 	}
-
 	
 	//detecting a URL change in YouTube
 	document.addEventListener('transitionend', function(e) {
