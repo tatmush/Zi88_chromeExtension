@@ -122,7 +122,7 @@ function clearAllData(){
 }
 
 function tweet(){
-	alert("Twitter has a 280 character limit!")
+	alert("Note twitter has a 280 character limit!")
 	let text = "";
 
 	ulTag = document.getElementById("playList");
@@ -146,7 +146,7 @@ function tweet(){
 
 		text = text + videoTitle + "\t" + "-" + "\t" + count + "\n";
     	//console.log(videoTitle + " " + count);
-})
+	})
 	//console.log(text);	
 	tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "via #Zi88";
 	window.open(tweetUrl);
