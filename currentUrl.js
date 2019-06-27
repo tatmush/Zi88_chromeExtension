@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	//clear all data button
 	document.getElementById("clearAllData").addEventListener("click", clearAllData);
 
+	//save button
+	document.getElementById("save").addEventListener("click", save);
+
 	//tweet button
 	document.getElementById("tweet").addEventListener("click", tweet);
 
@@ -123,7 +126,24 @@ function clearAllData(){
 
 function tweet(){
 	alert("Note twitter has a 280 character limit!")
+	let tweet = getPlaylist("tweet")
+	docRefId = localStorage.getItem("docRefId")
+	
+	//console.log(tweet);	
+	tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweet) + encodeURIComponent("via #Zi88\n") + docRefId;
+	window.open(tweetUrl);
+}
+
+function save(){
+	let playlistArray = getPlaylist("save");
+	localStorage.setItem("docRefId", "");
+
+	writeToFirebase(playlistArray);
+}
+
+function getPlaylist(type){
 	let text = "";
+	let playlistArray = [];
 
 	ulTag = document.getElementById("playList");
 	liTags = document.getElementsByTagName("li");
@@ -145,10 +165,16 @@ function tweet(){
 		count = span.innerText
 
 		text = text + videoTitle + "\t" + "-" + "\t" + count + "\n";
-    	//console.log(videoTitle + " " + count);
+		playlistArray.push(videoLink)
 	})
-	//console.log(text);	
-	tweetUrl = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "via #Zi88";
-	window.open(tweetUrl);
+
+	switch (type){
+		case "tweet":
+			return text;
+		case "save":
+			return playlistArray;
+	}
+	
+	return alert("Error");
 }
 

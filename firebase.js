@@ -11,14 +11,20 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-var db = firebase.firestore();
+function writeToFirebase(playlistArray){
+    var db = firebase.firestore();
 
-db.collection("playlists").add({
-    videoUrl: "https://www.youtube.com/watch?v=lR6y3Zcjcsk",
-})
-.then((docRef) => {
-    console.log("Document written with ID: " , docRef.id);
-})
-.catch((error) => {
-    console.log("Error adding document: ", error);
-})
+    db.collection("playlists").add({
+        playlistArray: playlistArray,
+    })
+    .then((docRef) => {
+        console.log("Document written with ID: " , docRef.id);
+        alert("Saved");
+        alert(docRef.id);
+        //localStorage.setItem("docRefId", docRef.id);
+    })
+    .catch((error) => {
+        alert("Error in saving data" + error);
+        console.log("Error adding document: ", error);
+    })
+}
