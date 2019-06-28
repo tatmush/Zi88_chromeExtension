@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	//tweet button
 	document.getElementById("tweet").addEventListener("click", tweet);
 
+	//search button
+	document.addEventListener("submit", search);
+
 	}, false);
 
 //get playing statistics from YouTube page.
@@ -113,7 +116,15 @@ function getVideoInfo(videoId, value){
 			musicList.appendChild(border);
 		}
 	})	
-	.catch(error => console.error(`Error ${error}`));
+	.catch(error => {
+		let div = document.getElementById("displayError")
+
+		if (div.childElementCount === 0){
+			displayError(error);
+		}
+		
+		console.error(`Error ${error}`);
+	});
 }
 
 function clearAllData(){
@@ -136,7 +147,7 @@ function tweet(){
 
 function save(){
 	let playlistArray = getPlaylist("save");
-	localStorage.setItem("docRefId", "");
+	//localStorage.setItem("docRefId", "");
 
 	writeToFirebase(playlistArray);
 }
@@ -178,3 +189,17 @@ function getPlaylist(type){
 	return alert("Error");
 }
 
+function displayError(error){
+	let div = document.getElementById("displayError")
+	let notification = document.createElement("span");
+	notification.className = "errorNotification";
+	notification.textContent = `${error}`;
+	div.appendChild(notification);
+}
+
+function search(event){
+	let searchText = document.getElementById("search").value;
+	searchPlaylist(searchText.trim());
+	//window.open("searchResults.html");
+	event.preventDefault();
+}

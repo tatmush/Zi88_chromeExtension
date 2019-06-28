@@ -38,6 +38,10 @@ button {
 	font-weight: bold;
 }
 
+.errorNotification {
+	color: #ff0000;
+}
+
 #playList {
 	list-style-type: none; 
 	padding-inline-start: 20px; 

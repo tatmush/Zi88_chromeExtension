@@ -9,14 +9,26 @@
 	<title>Zi88</title>
 </head>
 <body>
-	<div>
-		<h1 title="If your your some of your music does not appear here, It might not be listed under the Music category by YouTube.">Zi88</h1>
-		<a href="/about.html">About</a>
-		<div class="post">
-			<button id="save" type="button" class="btn btn-success" title="Save the current playlist">Save</button>
-			<button id="tweet" type="button" class="btn btn-primary" title="Twitter has a 140 character limit">Tweet</button>
-			
+		
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#" title="If your your some of your music does not appear here, It might not be listed under the Music category by YouTube.">Zi88</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+			<div class="navbar-nav">
+				<a id="save" class="nav-item nav-link active" href="#" title="Save the current playlist">Save<span class="sr-only">(current)</span></a>
+				<a id="tweet" class="nav-item nav-link" href="#"title="Twitter has a 140 character limit">Tweet</a>
+				<a class="nav-link" href="/about.html">About</a>
+			</div>
 		</div>
+		<form class="form-inline">
+			<input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+		</form>
+	</nav>
+	<div>	
+		<div id="displayError" class="displayError"></div>
 		<ul id="playList"><h3>Your listening history</h3></ul>
 		<button id="clearAllData" type="button" class="btn btn-danger btn-block">clear</button>
 	</div>
