@@ -2,26 +2,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	chrome.tabs.query({currentWindow: true, active: true}, (tabs) => {
 		chrome.tabs.sendMessage(tabs[0].id, "", getStats)
-		});
+	});
+
+	// home button (navbar) event listener
+	document.getElementById("home").addEventListener("click", () => location.reload());
 	
-	//clear all data button
+	// clear all data button event listener
 	document.getElementById("clearAllData").addEventListener("click", clearAllData);
 
-	//save button
+	//save button event listener
 	document.getElementById("save").addEventListener("click", save);
 
-	//tweet button
+	//tweet button event listener
 	document.getElementById("tweet").addEventListener("click", tweet);
 
-	//search button
+	//search button event listener
 	document.addEventListener("submit", search);
 
 	}, false);
 
 //get playing statistics from YouTube page.
 function getStats(stats){
-	//console.log(stats);
-	musicList = document.getElementById("playList");
+	console.log(stats);
+
+	if (stats === undefined){
+		displayError("There was an error. Check your internet connection or if you are on www.youtube.com");
+		document.querySelector(".spinner-1").style.display = "none";
+	} 
+
+	musicList = document.getElementById("playlist");
 	Object.entries(stats).forEach(
 		([key, value]) => {
 			
@@ -29,16 +38,13 @@ function getStats(stats){
 			videoId = key.slice(index+2);
 			videoData = getVideoInfo(videoId, value);
 		});
+	
+	document.querySelector(".playlist").style.display = "block";
+	document.querySelector(".spinner-1").style.display = "none";
 }
 
 function getVideoInfo(videoId, value){
 
-	let options = {
-		part: "snippet",
-		key: "AIzaSyDu5IvZjAwtER32DW8JF9UWw3UpjhMUf1k",
-		id: videoId
-	}
-	
 	fetch("https://www.googleapis.com/youtube/v3/videos?part=snippet&key=AIzaSyDu5IvZjAwtER32DW8JF9UWw3UpjhMUf1k&id=" + videoId)
 	.then(response => response.json())
 	.then(data => {
@@ -79,8 +85,7 @@ function getVideoInfo(videoId, value){
 				});
 
 				li.nextSibling.remove()
-				li.remove();
-				
+				li.remove();	
 				
 			}
 
@@ -132,7 +137,7 @@ function clearAllData(){
 			chrome.tabs.sendMessage(tabs[0].id, "clear")
 			});
 
-	document.getElementById("playList").innerHTML = "";
+	document.getElementById("playlist").innerHTML = "";
 }
 
 function tweet(){
@@ -156,7 +161,7 @@ function getPlaylist(type){
 	let text = "";
 	let playlistArray = [];
 
-	ulTag = document.getElementById("playList");
+	ulTag = document.getElementById("playlist");
 	liTags = document.getElementsByTagName("li");
 	
 	liTagArray=Object.values(liTags);
@@ -189,6 +194,7 @@ function getPlaylist(type){
 	return alert("Error");
 }
 
+// Display the error 
 function displayError(error){
 	let div = document.getElementById("displayError")
 	let notification = document.createElement("span");
@@ -197,9 +203,18 @@ function displayError(error){
 	div.appendChild(notification);
 }
 
+// Search for requested playlist
 function search(event){
+	
+	// Hide the playlist <ul>  and show the spinner
+	document.getElementById("playlist").innerHTML = "";
+	document.querySelector(".playlist").style.display = "none";
+	document.querySelector(".spinner-1").style.display = "block";
+
 	let searchText = document.getElementById("search").value;
 	searchPlaylist(searchText.trim());
+	console.log("Search complete");
+	
 	//window.open("searchResults.html");
 	event.preventDefault();
 }

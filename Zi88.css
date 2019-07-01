@@ -38,11 +38,36 @@ button {
 	font-weight: bold;
 }
 
+.spinner-1:before{
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	top: 25%;
+	left: 50%;
+	height: 30px;
+	width: 30px;
+	margin-top: -30px;
+	margin-left: -30px;
+	border-radius: 50%;
+	border: 2px solid transparent;
+	border-top-color: coral;
+	border-bottom-color: rgb(130, 255, 80);
+	animation: spinner 0.7s ease infinite;
+	opacity: .7;
+}
+
+@keyframes spinner {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
 .errorNotification {
 	color: #ff0000;
 }
 
-#playList {
+.playlist {
 	list-style-type: none; 
-	padding-inline-start: 20px; 
+	padding-inline-start: 20px;
+	display: none;
 }

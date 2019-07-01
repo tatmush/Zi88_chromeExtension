@@ -2,17 +2,13 @@ console.log(JSON.parse(localStorage.getItem("importedPlaylist")));
 
 let obj = JSON.parse(localStorage.getItem("importedPlaylist"));
 let x = obj.playlistArray;
-let searchResults = document.getElementById("searchResults");
+document.getElementById("playlist").innerHTML = "";
 
 x.forEach(parse);
 
 function parse(item, index){
-    let li = document.createElement("li");
-    let span = document.createElement("span");
-    li.className = "d-flex flex-row";
-
-    span.textContent = item
-
-    li.appendChild(span);
-    searchResults.appendChild(li);
+    index = item.indexOf("v=");
+    videoId = item.slice(index+2);
+    console.log(videoId);
+    videoData = getVideoInfo(videoId, "");    
 }

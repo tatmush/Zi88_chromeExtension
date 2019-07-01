@@ -32,7 +32,7 @@ function writeToFirebase(playlistArray){
 }
 
 function searchPlaylist(searchText){
-    console.log(searchText);
+    //console.log(searchText);
     let db = firebase.firestore();
 
     let docRef = db.collection("playlists").doc(searchText);
@@ -40,10 +40,27 @@ function searchPlaylist(searchText){
     docRef.get().then(doc => {
         if (doc.exists) {
             console.log("Document data: ", doc.data());
-            localStorage.setItem("importedPlaylist", JSON.stringify(doc.data()));
-            location.replace("/searchResults.html")
+            //console.log("Document data: ", doc.data());
+            //localStorage.setItem("importedPlaylist", JSON.stringify(doc.data()));
+            //location.replace("/searchResults.html")
+            
+            let playlist = doc.data().playlistArray;
+            //console.log(playlist);
+
+            // Hide the spinner and show the playlist <ul> 
+            document.querySelector(".playlist").style.display = "block";
+	        document.querySelector(".spinner-1").style.display = "none";
+
+            playlist.forEach((item, index) => {
+                index = item.indexOf("v=");
+                videoId = item.slice(index+2);
+                console.log(videoId);
+                videoData = getVideoInfo(videoId, "");
+            });  
         }
         else {
+            displayError("Playlist not found");
+            document.querySelector(".spinner-1").style.display = "none";
             console.log("no such document")
         }
     })
