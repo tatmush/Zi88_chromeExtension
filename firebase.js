@@ -19,8 +19,9 @@ function writeToFirebase(playlistArray){
     })
     .then((docRef) => {
         console.log("Document written with ID: " , docRef.id);
+        document.querySelector(".spinner-1").style.display = "none";
         alert("Saved");
-        alert(docRef.id);
+        //alert(docRef.id);
         localStorage.setItem("docRefId", docRef.id);
     })
     .catch((error) => {
@@ -40,9 +41,6 @@ function searchPlaylist(searchText){
     docRef.get().then(doc => {
         if (doc.exists) {
             console.log("Document data: ", doc.data());
-            //console.log("Document data: ", doc.data());
-            //localStorage.setItem("importedPlaylist", JSON.stringify(doc.data()));
-            //location.replace("/searchResults.html")
             
             let playlist = doc.data().playlistArray;
             //console.log(playlist);

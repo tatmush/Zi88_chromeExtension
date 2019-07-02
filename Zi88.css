@@ -71,3 +71,11 @@ button {
 	padding-inline-start: 20px;
 	display: none;
 }
+
+.about {
+	display: none;
+}
+
+.aboutLink {
+	display: initial;
+}

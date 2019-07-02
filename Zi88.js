@@ -6,17 +6,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// home button (navbar) event listener
 	document.getElementById("home").addEventListener("click", () => location.reload());
+
+	// about button event listener
+	document.getElementById("about").addEventListener("click", showAbout);
 	
 	// clear all data button event listener
 	document.getElementById("clearAllData").addEventListener("click", clearAllData);
 
-	//save button event listener
+	// save button event listener
 	document.getElementById("save").addEventListener("click", save);
 
-	//tweet button event listener
+	// tweet button event listener
 	document.getElementById("tweet").addEventListener("click", tweet);
 
-	//search button event listener
+	// search button event listener
 	document.addEventListener("submit", search);
 
 	}, false);
@@ -141,7 +144,7 @@ function clearAllData(){
 }
 
 function tweet(){
-	alert("Note twitter has a 280 character limit!")
+	alert("Please note twitter has a 280 character limit!")
 	let tweet = getPlaylist("tweet")
 	docRefId = localStorage.getItem("docRefId")
 	
@@ -152,8 +155,7 @@ function tweet(){
 
 function save(){
 	let playlistArray = getPlaylist("save");
-	//localStorage.setItem("docRefId", "");
-
+	document.querySelector(".spinner-1").style.display = "block";
 	writeToFirebase(playlistArray);
 }
 
@@ -169,13 +171,13 @@ function getPlaylist(type){
 
 		divs = liTag.getElementsByTagName("div");
 		
-		//get the title of the video
+		// get the title of the video
 		titleDiv = divs[1];
 	    link = titleDiv.getElementsByTagName("a")[0];
 		videoTitle = link.innerHTML;
 		videoLink = link.href
 		
-		//get the number of times played		
+		// get the number of times played		
 		countDiv = divs[2];
 		span = countDiv.getElementsByTagName("span")[0];
 		count = span.innerText
@@ -189,8 +191,7 @@ function getPlaylist(type){
 			return text;
 		case "save":
 			return playlistArray;
-	}
-	
+	}	
 	return alert("Error");
 }
 
@@ -215,6 +216,11 @@ function search(event){
 	searchPlaylist(searchText.trim());
 	console.log("Search complete");
 	
-	//window.open("searchResults.html");
 	event.preventDefault();
+}
+
+function showAbout(){
+	document.getElementById("aboutDiv").style.display = "block";
+	document.querySelector(".playlist").style.display = "none";
+	document.getElementById("clearAllData").style.display = "none";
 }
